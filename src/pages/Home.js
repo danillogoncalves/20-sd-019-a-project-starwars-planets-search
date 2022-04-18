@@ -1,9 +1,13 @@
 import React from 'react';
+import FilterByName from '../components/FilterByName';
 import Table from '../components/Table';
 
 function Home() {
   return (
-    <Table />
+    <main>
+      <FilterByName />
+      <Table />
+    </main>
   );
 }
 

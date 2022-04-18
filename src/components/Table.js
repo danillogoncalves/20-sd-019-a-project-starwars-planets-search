@@ -4,7 +4,13 @@ import starWarsContext from '../contexts/starWarsContext';
 const Table = () => {
   const {
     data,
+    filterByName,
+    filteredData,
   } = useContext(starWarsContext);
+  let currentData = data;
+  if (filteredData.length || filterByName) {
+    currentData = filteredData;
+  }
   return (
     <table>
       <tbody>
@@ -12,7 +18,7 @@ const Table = () => {
           { data[0] && Object.keys(data[0])
             .map((title, index) => <th key={ index }>{title}</th>)}
         </tr>
-        { data.map((planet) => (
+        { currentData.map((planet) => (
           <tr key={ planet.name }>
             <td>{ planet.name }</td>
             <td>{ planet.rotation_period }</td>
