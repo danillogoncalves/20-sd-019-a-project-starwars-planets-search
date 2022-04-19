@@ -19,10 +19,13 @@ const StarWarsProvider = (props) => {
   const [data, setData] = useState([]);
   const [filterByName, setFilterByName] = useState(INTIAL_STATE_FILTER_BY_NAME);
   const [filteredData, setFilteredData] = useState([]);
-  const [column, setColumn] = useState('population');
   const [columnList, setColumnList] = useState(INTIAL_STATE_COLUMN);
+  const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState('0');
+  const [columnSort, setSolumnSort] = useState('population');
+  const [whatOrder, setWhatOrder] = useState('ASC');
+  const [order, setOrder] = useState({});
   const [disableButtonFiltrar, setDisableButtonFiltrar] = useState(false);
   const [filterByNumericValues, setFilterByNumericValues] = useState([]);
 
@@ -31,12 +34,29 @@ const StarWarsProvider = (props) => {
     setData(result);
   };
 
+  const sortListPlanet = (list) => {
+    list.sort((a, b) => {
+      const BIGGER_COMPARISON = 1;
+      const SMALLER_COMPARISON = -1;
+      if (a.name > b.name) {
+        return BIGGER_COMPARISON;
+      }
+      if (a.name < b.name) {
+        return SMALLER_COMPARISON;
+      }
+      return 0;
+    });
+  };
+
   const getFilteredData = (() => {
     let newdata = data.filter(({ name }) => {
       const testNameData = name.toLocaleLowerCase();
       const testNameFilter = (filterByName.name).toLocaleLowerCase();
       return testNameData.includes(testNameFilter);
     });
+
+    sortListPlanet(newdata);
+
     filterByNumericValues.forEach((filter) => {
       newdata = newdata.filter((info) => {
         if (info[filter.column] === 'unknown') {
@@ -51,6 +71,20 @@ const StarWarsProvider = (props) => {
         return null;
       });
     });
+
+    if (order.sort === 'ASC') {
+      const unknownData = newdata.filter((info) => info[order.column] === 'unknown');
+      newdata = newdata.filter((info) => info[order.column] !== 'unknown');
+      newdata.sort((a, b) => +a[order.column] - +b[order.column]);
+      newdata = [...newdata, ...unknownData];
+    }
+    if (order.sort === 'DESC') {
+      const unknownData = newdata.filter((info) => info[order.column] === 'unknown');
+      newdata = newdata.filter((info) => info[order.column] !== 'unknown');
+      newdata.sort((a, b) => +b[order.column] - +a[order.column]);
+      newdata = [...newdata, ...unknownData];
+    }
+
     setFilteredData(newdata);
   });
 
@@ -103,6 +137,12 @@ const StarWarsProvider = (props) => {
     setComparison,
     value,
     setValue,
+    columnSort,
+    setSolumnSort,
+    whatOrder,
+    setWhatOrder,
+    order,
+    setOrder,
     disableButtonFiltrar,
     filterByNumericValues,
     setFilterByNumericValues,

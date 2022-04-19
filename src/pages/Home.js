@@ -11,6 +11,7 @@ function Home() {
     filterByName,
     filterByNumericValues,
     // columnList,
+    order,
     getFetchApiData,
     getFilteredData,
     updateColumnList,
@@ -23,7 +24,7 @@ function Home() {
   useEffect(() => {
     getFilteredData();
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data, filterByName, filterByNumericValues]);
+  }, [data, filterByName, filterByNumericValues, order]);
 
   useEffect(() => {
     updateColumnList();

@@ -7,6 +7,14 @@ const COMPARISON = [
   'igual a',
 ];
 
+const COLUMN_SORT = [
+  'population',
+  'orbital_period',
+  'diameter',
+  'rotation_period',
+  'surface_water',
+];
+
 function FilterByNumericValues() {
   const {
     column,
@@ -16,6 +24,11 @@ function FilterByNumericValues() {
     setComparison,
     value,
     setValue,
+    columnSort,
+    setSolumnSort,
+    whatOrder,
+    setWhatOrder,
+    setOrder,
     disableButtonFiltrar,
     setFilterByNumericValues,
     getFilterByNumericValues,
@@ -59,6 +72,54 @@ function FilterByNumericValues() {
         onClick={ getFilterByNumericValues }
       >
         FILTRAR
+      </button>
+      <select
+        data-testid="column-sort"
+        value={ columnSort }
+        onChange={ ({ target }) => setSolumnSort(target.value) }
+      >
+        { COLUMN_SORT.map((optionColumnSort) => (
+          <option
+            key={ optionColumnSort }
+          >
+            { optionColumnSort }
+          </option>
+        )) }
+      </select>
+      <label
+        htmlFor="order-asc-id"
+      >
+        <input
+          data-testid="column-sort-input-asc"
+          id="order-asc-id"
+          name="order"
+          type="radio"
+          value="ASC"
+          onChange={ ({ target }) => setWhatOrder(target.value) }
+        />
+        Ascendente
+      </label>
+      <label
+        htmlFor="order-desc-id"
+      >
+        <input
+          data-testid="column-sort-input-desc"
+          id="order-desc-id"
+          name="order"
+          type="radio"
+          value="DESC"
+          onChange={ ({ target }) => setWhatOrder(target.value) }
+        />
+        Descendente
+      </label>
+      <button
+        data-testid="column-sort-button"
+        type="button"
+        onClick={ () => setOrder(
+          { column: columnSort, sort: whatOrder },
+        ) }
+      >
+        ORDENAR
       </button>
       <button
         data-testid="button-remove-filters"
