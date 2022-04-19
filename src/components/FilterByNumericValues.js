@@ -17,6 +17,7 @@ function FilterByNumericValues() {
     value,
     setValue,
     disableButtonFiltrar,
+    setFilterByNumericValues,
     getFilterByNumericValues,
   } = useContext(starWarsContext);
 
@@ -58,6 +59,13 @@ function FilterByNumericValues() {
         onClick={ getFilterByNumericValues }
       >
         FILTRAR
+      </button>
+      <button
+        data-testid="button-remove-filters"
+        type="button"
+        onClick={ () => setFilterByNumericValues([]) }
+      >
+        Remover todas filtragens
       </button>
     </div>
   );

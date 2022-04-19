@@ -55,7 +55,12 @@ const StarWarsProvider = (props) => {
   });
 
   const getFilterByNumericValues = () => {
+    const INDEX_START = 2;
+    const INDEX_END = 18;
     const object = {
+      id: Math.random()
+        .toString()
+        .substring(INDEX_START, INDEX_END) + new Date().getTime(),
       column,
       comparison,
       value,
@@ -100,6 +105,7 @@ const StarWarsProvider = (props) => {
     setValue,
     disableButtonFiltrar,
     filterByNumericValues,
+    setFilterByNumericValues,
     getFilterByNumericValues,
     updateColumnList,
   };
