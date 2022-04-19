@@ -3,17 +3,27 @@ import PropTypes from 'prop-types';
 import starWarsContext from './starWarsContext';
 import fetchApi from '../services/fetchApi';
 
-const INTITAL_STATE_FILTER_BY_NAME = {
+const INTIAL_STATE_FILTER_BY_NAME = {
   name: '',
 };
 
+const INTIAL_STATE_COLUMN = [
+  'population',
+  'orbital_period',
+  'diameter',
+  'rotation_period',
+  'surface_water',
+];
+
 const StarWarsProvider = (props) => {
   const [data, setData] = useState([]);
-  const [filterByName, setFilterByName] = useState(INTITAL_STATE_FILTER_BY_NAME);
+  const [filterByName, setFilterByName] = useState(INTIAL_STATE_FILTER_BY_NAME);
   const [filteredData, setFilteredData] = useState([]);
   const [column, setColumn] = useState('population');
+  const [columnList, setColumnList] = useState(INTIAL_STATE_COLUMN);
   const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState('0');
+  const [disableButtonFiltrar, setDisableButtonFiltrar] = useState(false);
   const [filterByNumericValues, setFilterByNumericValues] = useState([]);
 
   const getFetchApiData = async () => {
@@ -56,6 +66,21 @@ const StarWarsProvider = (props) => {
     ]);
   };
 
+  const updateColumnList = () => {
+    let newColumnList = INTIAL_STATE_COLUMN;
+    filterByNumericValues.forEach((filter) => {
+      newColumnList = newColumnList.filter((element) => !element.includes(filter.column));
+    });
+    setColumnList(newColumnList);
+    setColumn(newColumnList[0]);
+
+    if (newColumnList[0]) {
+      setDisableButtonFiltrar(false);
+    } else {
+      setDisableButtonFiltrar(true);
+    }
+  };
+
   const { Provider } = starWarsContext;
   const { children } = props;
 
@@ -68,12 +93,15 @@ const StarWarsProvider = (props) => {
     setFilterByName,
     column,
     setColumn,
+    columnList,
     comparison,
     setComparison,
     value,
     setValue,
+    disableButtonFiltrar,
     filterByNumericValues,
     getFilterByNumericValues,
+    updateColumnList,
   };
 
   return (

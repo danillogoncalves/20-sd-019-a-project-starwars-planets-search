@@ -9,8 +9,10 @@ function Home() {
     data,
     filterByName,
     filterByNumericValues,
+    // columnList,
     getFetchApiData,
     getFilteredData,
+    updateColumnList,
   } = useContext(starWarsContext);
   useEffect(() => {
     getFetchApiData();
@@ -21,6 +23,12 @@ function Home() {
     getFilteredData();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, filterByName, filterByNumericValues]);
+
+  useEffect(() => {
+    updateColumnList();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filterByNumericValues]);
+
   return (
     <main>
       <FilterByName />

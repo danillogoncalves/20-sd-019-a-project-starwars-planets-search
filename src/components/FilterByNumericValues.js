@@ -1,14 +1,6 @@
 import React, { useContext } from 'react';
 import starWarsContext from '../contexts/starWarsContext';
 
-const COLUMN = [
-  'population',
-  'orbital_period',
-  'diameter',
-  'rotation_period',
-  'surface_water',
-];
-
 const COMPARISON = [
   'maior que',
   'menor que',
@@ -19,12 +11,15 @@ function FilterByNumericValues() {
   const {
     column,
     setColumn,
+    columnList,
     comparison,
     setComparison,
     value,
     setValue,
+    disableButtonFiltrar,
     getFilterByNumericValues,
   } = useContext(starWarsContext);
+
   return (
     <div>
       <h1>Filter By Numeric Values</h1>
@@ -33,7 +28,7 @@ function FilterByNumericValues() {
         value={ column }
         onChange={ ({ target }) => setColumn(target.value) }
       >
-        { COLUMN.map((optionColumn) => (
+        { columnList.map((optionColumn) => (
           <option key={ optionColumn }>
             { optionColumn }
           </option>
@@ -59,6 +54,7 @@ function FilterByNumericValues() {
       <button
         data-testid="button-filter"
         type="button"
+        disabled={ disableButtonFiltrar }
         onClick={ getFilterByNumericValues }
       >
         FILTRAR
