@@ -10,7 +10,6 @@ function Home() {
     data,
     filterByName,
     filterByNumericValues,
-    // columnList,
     order,
     getFetchApiData,
     getFilteredData,
